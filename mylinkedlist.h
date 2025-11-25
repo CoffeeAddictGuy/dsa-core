@@ -2,80 +2,108 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct ListNode {
-    int val;
-    struct ListNode *next;
-};
+typedef struct LinkedList {
+  struct LinkedList *nextAddr;
+  int key;
+} LL;
 
-struct ListNode* createList(int value) {
-    struct ListNode* newList = (struct ListNode*)malloc(sizeof(struct ListNode));
-    newList->val = value;
-    newList->next = NULL;
-    return newList;
+LL *listInit(int key) {
+  LL *newListElement = (struct LinkedList *)malloc(sizeof(LL));
+  newListElement->key = key;
+  newListElement->nextAddr = NULL;
+  return newListElement;
 }
 
-struct ListNode* insertInt(struct ListNode* head, int value) {
-    if (head == NULL) return createList(value);
-    if (head->next != NULL)
-        head->next = insertInt(head->next, value);
-    else if (head->next == NULL) {
-        struct ListNode* newNode = createList(value);
-        head->next = newNode;
-    }
-    return head;
+LL *listAhead(LL *list, LL *value) {
+  if (list == NULL || list->nextAddr == NULL)
+    return NULL;
+  if (list->nextAddr->key == value->key)
+    return list;
+  else
+    return listAhead(list->nextAddr, value);
 }
 
-void printList(struct ListNode* head) {
-    if (head == NULL) return;
-    if (head->next == NULL) {
-        printf("%d", head->val);
-    } else {
-        printf("%d -> ", head->val);
-    }
-    printList(head->next);
+LL *listAdd(LL *list, int x) {
+  if (list == NULL)
+    return listInit(x);
+  if (list->nextAddr != NULL)
+    listAdd(list->nextAddr, x);
+  else {
+    LL *newList = listInit(x);
+    list->nextAddr = newList;
+  }
+  return list;
 }
 
+void listAddAfter(LL **list, LL *target, LL *value) {
+  if (list == NULL)
+    return;
 
-int listLenght(struct ListNode* head) {
-    if (head == NULL) return 0;
+  LL *newList = listInit(value->key);
+  if (target->nextAddr != NULL)
+    newList->nextAddr = target->nextAddr;
 
-    struct ListNode* curr = head;
-    int cnt = 0;
-
-    while (curr != NULL) {
-        cnt++;
-        curr = curr->next;
-    }
-    return cnt;
+  target->nextAddr = newList;
 }
 
-int getIntValueByIndex(struct ListNode* head, int index) {
-    int lenght = listLenght(head);
-    if (index > lenght)
-        return -1;
-    
-    struct ListNode* curr = head;
-    int cnt = 0;
-    
-    while (cnt != index) {
-        curr = curr->next;
-        cnt+=1;
-    }
-    
-    return curr->val;
+void listAddBefore(LL **list, LL *target, LL *value) {
+  LL *p;
+  LL *pred;
+
+  p = *list;
+  pred = listAhead(*list, target);
+
+  if (pred == NULL) {
+    value->nextAddr = *list;
+    *list = value;
+  } else {
+    value->nextAddr = pred->nextAddr;
+    pred->nextAddr = value;
+  }
 }
 
-void setIntValueByIndex(struct ListNode* head, int index, int value) {
-    int lenght = listLenght(head);
-    if (index > lenght)
-        return;
+void listPrint(LL *list) {
+  if (list != NULL && list->nextAddr != NULL) {
+    printf("%d - ", list->key);
+    return listPrint(list->nextAddr);
+  } else {
+    printf("%d\n", list->key);
+  }
+}
 
-    struct ListNode* curr = head;
-    int cnt = 0;
+LL *listSearch(LL *list, LL *value) {
+  if (list == NULL)
+    return NULL;
+  if (list->key == value->key)
+    return list;
+  else
+    return listSearch(list->nextAddr, value);
+}
 
-    while (cnt != index) {
-        curr = curr->next;
-        cnt+=1;
-    }
-    curr->val = value;
+int listLenght(LL *list) {
+  if (list == NULL)
+    return 0;
+  int k = 0;
+  while (list != NULL) {
+    k++;
+    list = list->nextAddr;
+  }
+  return k;
+}
+
+void listDelElement(LL **list, LL *value) {
+  LL *p;
+  LL *pred;
+  LL *curr;
+
+  p = *list;
+  pred = listAhead(*list, value);
+  curr = listSearch(*list, value);
+
+  if (pred == NULL)
+    *list = p->nextAddr;
+  else
+    pred->nextAddr = curr->nextAddr;
+
+  free(curr);
 }
