@@ -57,7 +57,7 @@ void da_pop(DynamicArray *array) {
 }
 
 size_t da_get(DynamicArray *array, size_t index) {
-  if (index <= array->size) {
+  if (index < array->size) {
     return array->value[index];
   }
   return NULL;
