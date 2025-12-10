@@ -11,6 +11,7 @@
 |------|----------|--------|
 | `mybinarytree.h` | Бинарные деревья и BST | [Открыть](mybinarytree.h) |
 | `mylinkedlist.h` | Односвязные списки | [Открыть](mylinkedlist.h) |
+| `dncr.{c.h}` | Динамический массив | [Открыть](dncr.c) |
 | `mylittlelib.h` | Математические утилиты | [Открыть](mylittlelib.h) |
 | `mysortlib.h` | Утилиты для сортировки | [Открыть](mysortlib.h) |
 | `DOC.md` | Документация | [Открыть](DOC.md) |
