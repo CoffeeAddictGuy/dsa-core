@@ -81,6 +81,8 @@ void da_remove(DynamicArray *array, size_t index) {
   }
 }
 
+void da_clear(DynamicArray *array) { array->size = 0; }
+
 void da_free(DynamicArray *array) {
   free(array->value);
   free(array);
