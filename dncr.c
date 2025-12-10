@@ -2,6 +2,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 DynamicArray *da_init(size_t initial_capacity) {
   DynamicArray *array = (DynamicArray *)malloc(sizeof(DynamicArray));
@@ -53,6 +54,31 @@ void da_pop(DynamicArray *array) {
     return;
   size_t tSize = array->size;
   array->size = tSize - 1;
+}
+
+size_t da_get(DynamicArray *array, size_t index) {
+  if (index <= array->size) {
+    return array->value[index];
+  }
+  return NULL;
+}
+
+void da_set(DynamicArray *array, size_t index, int value) {
+  if (index > array->size || index > array->capacity)
+    return;
+  array->value[index] = value;
+}
+
+void da_remove(DynamicArray *array, size_t index) {
+  if (index > array->size)
+    return;
+  if (index == array->size) {
+    da_pop(array);
+  } else {
+    memcpy(&array->value[index], &array->value[index + 1],
+           sizeof(int) * (array->size - index));
+    array->size -= 1;
+  }
 }
 
 void da_free(DynamicArray *array) {
