@@ -1,6 +1,7 @@
 *.o
 *.exe
 build/
+.vscode/
 Makefile
 test.c
 main.c
