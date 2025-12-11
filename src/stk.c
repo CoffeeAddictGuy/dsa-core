@@ -1,7 +1,4 @@
 #include "stk.h"
-#include "dncr.h"
-#include <stddef.h>
-#include <stdlib.h>
 
 Stack *stk_init(size_t capacity) {
   Stack *stack = (Stack *)malloc(sizeof(Stack));

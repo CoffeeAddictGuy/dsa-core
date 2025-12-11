@@ -1,8 +1,4 @@
 #include "dncr.h"
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 DynamicArray *da_init(size_t initial_capacity) {
   DynamicArray *array = (DynamicArray *)malloc(sizeof(DynamicArray));
