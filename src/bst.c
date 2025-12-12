@@ -15,7 +15,6 @@ BST *bst_init(int value) {
 }
 
 BST *bst_insert(BST *bst, int value) {
-
   if (bst == NULL) {
     return bst_init(value);
   }
@@ -40,6 +39,82 @@ BST *bst_search(BST *bst, int value) {
   }
 }
 
+BST *bst_search_parent(BST *bst, int value) {
+  if (bst->left == NULL && bst->right == NULL) {
+    return NULL;
+  }
+
+  if (bst->left != NULL) {
+    if (bst->left->value == value) {
+      return bst;
+    }
+  }
+  if (bst->right != NULL) {
+    if (bst->right->value == value) {
+      return bst;
+    }
+  }
+
+  if (value > bst->value) {
+    return bst_search_parent(bst->right, value);
+  } else if (value < bst->value) {
+    return bst_search_parent(bst->left, value);
+  } else {
+    return bst;
+  }
+}
+
+BST *bst_delete(BST *bst, int value) {
+  BST *p = bst_search_parent(bst, value);
+  BST *srch = (value > p->value) ? p->right : p->left;
+
+  if (p == bst) { // root
+    if (p->right == NULL && p->left == NULL) {
+      return NULL;
+    } else if (p->left == NULL || p->right == NULL) {
+      if (p->left != NULL) {
+        p->value = p->left->value;
+        p->left = p->left->left;
+        p->right = p->left->right;
+      } else {
+        p->value = p->right->value;
+        p->left = p->right->left;
+        p->right = p->right->right;
+      }
+    } else if (p->left != NULL && p->right != NULL) {
+      BST *rplc = bst_min(p->right);
+      p->value = rplc->value;
+      bst_delete(p->right, rplc->value);
+    }
+  } else if (srch->left == NULL && srch->right == NULL) { // no child
+    if (p->left == srch) {
+      p->left = NULL;
+    }
+    if (p->right == srch) {
+      p->right = NULL;
+    }
+  } else if (srch->left == NULL || srch->right == NULL) { // one child
+    if (srch->left == NULL) {
+      if (p->left == srch) {
+        p->left = srch->right;
+      } else {
+        p->right = srch->right;
+      }
+    } else {
+      if (p->left == srch) {
+        p->left = srch->left;
+      } else {
+        p->right = srch->left;
+      }
+    }
+  } else if (srch->left != NULL && srch->right != NULL) { // two child
+    BST *rplc = bst_min(srch->right);
+    srch->value = rplc->value;
+    bst_delete(srch->right, rplc->value);
+  }
+  return bst;
+}
+
 int bst_height(BST *bst) {
   if (bst == NULL) {
     return 0;
@@ -50,16 +125,16 @@ int bst_height(BST *bst) {
   return 1 + (left_height > right_height ? left_height : right_height);
 }
 
-int bst_min(BST *bst) {
+BST *bst_min(BST *bst) {
   if (bst->left == NULL) {
-    return bst->value;
+    return bst;
   }
   return bst_min(bst->left);
 }
 
-int bst_max(BST *bst) {
+BST *bst_max(BST *bst) {
   if (bst->right == NULL) {
-    return bst->value;
+    return bst;
   }
   return bst_max(bst->right);
 }
