@@ -1,7 +1,4 @@
 #include "bst.h"
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 BST *bst_init(int value) {
   BST *bst = (BST *)malloc(sizeof(BST));
@@ -123,6 +120,30 @@ int bst_height(BST *bst) {
   int right_height = bst_height(bst->right);
 
   return 1 + (left_height > right_height ? left_height : right_height);
+}
+
+size_t bst_count_nodes(BST *bst) {
+  if (bst == NULL) {
+    return 0;
+  }
+
+  size_t left = bst_count_nodes(bst->left);
+  size_t right = bst_count_nodes(bst->right);
+
+  return left + right + 1;
+}
+
+size_t bst_sum(BST *bst) {
+  if (bst == NULL) {
+    return 0;
+  }
+
+  size_t left = bst_sum(bst->left);
+  size_t right = bst_sum(bst->right);
+  size_t res = bst->value;
+  printf("left %lld, right %lld and res %lld\n", left, right, res);
+
+  return res + left + right;
 }
 
 BST *bst_min(BST *bst) {
