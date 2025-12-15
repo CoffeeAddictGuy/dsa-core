@@ -5,3 +5,5 @@ build/
 Makefile
 test.c
 main.c
+bst_rewrite.c
+bst_rewrite.h
