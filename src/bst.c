@@ -62,52 +62,62 @@ BST *bst_search_parent(BST *bst, int value) {
 }
 
 BST *bst_delete(BST *bst, int value) {
-  BST *p = bst_search_parent(bst, value);
-  BST *srch = (value > p->value) ? p->right : p->left;
-
-  if (p == bst) { // root
-    if (p->right == NULL && p->left == NULL) {
-      return NULL;
-    } else if (p->left == NULL || p->right == NULL) {
-      if (p->left != NULL) {
-        p->value = p->left->value;
-        p->left = p->left->left;
-        p->right = p->left->right;
-      } else {
-        p->value = p->right->value;
-        p->left = p->right->left;
-        p->right = p->right->right;
+  if (bst == NULL) {
+    return NULL;
+  }
+  BST *srch_node = bst_search(bst, value);
+  BST *prnt_node = bst_search_parent(bst, srch_node->value);
+  // root
+  if (prnt_node == srch_node) {
+    if (srch_node->left == NULL && srch_node->right == NULL) { // no child
+      bst_free(bst);
+    } else if (srch_node->left == NULL ||
+               srch_node->right == NULL) { // one child
+      if (srch_node->left != NULL) {
+        prnt_node->value = prnt_node->left->value;
+        prnt_node->left = prnt_node->left->left;
+        prnt_node->right = prnt_node->right->right;
+      } else if (srch_node->right != NULL) {
+        prnt_node->value = prnt_node->right->value;
+        prnt_node->left = prnt_node->right->left;
+        prnt_node->right = prnt_node->right->right;
       }
-    } else if (p->left != NULL && p->right != NULL) {
-      BST *rplc = bst_min(p->right);
-      p->value = rplc->value;
-      bst_delete(p->right, rplc->value);
+    } else if (srch_node->left != NULL &&
+               srch_node->right != NULL) { // two child
+      BST *rmin = bst_min(srch_node->right);
+      prnt_node->value = rmin->value;
+      bst_delete(srch_node->right, rmin->value);
     }
-  } else if (srch->left == NULL && srch->right == NULL) { // no child
-    if (p->left == srch) {
-      p->left = NULL;
-    }
-    if (p->right == srch) {
-      p->right = NULL;
-    }
-  } else if (srch->left == NULL || srch->right == NULL) { // one child
-    if (srch->left == NULL) {
-      if (p->left == srch) {
-        p->left = srch->right;
-      } else {
-        p->right = srch->right;
+  }
+  //  nodes
+  else if (prnt_node != srch_node) {
+    if (srch_node->left == NULL && srch_node->right == NULL) { // no child
+      if (srch_node->value > prnt_node->value) {
+        prnt_node->right = NULL;
+      } else if (srch_node->value < prnt_node->value) {
+        prnt_node->left = NULL;
       }
-    } else {
-      if (p->left == srch) {
-        p->left = srch->left;
-      } else {
-        p->right = srch->left;
+    } else if (srch_node->left == NULL ||
+               srch_node->right == NULL) { // one child
+      if (srch_node->left != NULL) {
+        if (srch_node->left->value > prnt_node->value) {
+          prnt_node->right = srch_node->left;
+        } else if (srch_node->left->value < prnt_node->value) {
+          prnt_node->left = srch_node->left;
+        }
+      } else if (srch_node->right != NULL) {
+        if (srch_node->right->value > prnt_node->value) {
+          prnt_node->right = srch_node->right;
+        } else if (srch_node->right->value < prnt_node->value) {
+          prnt_node->left = srch_node->right;
+        }
       }
+    } else if (srch_node->left != NULL &&
+               srch_node->right != NULL) { // two child
+      BST *rmin = bst_min(srch_node->right);
+      srch_node->value = rmin->value;
+      bst_delete(srch_node->right, rmin->value);
     }
-  } else if (srch->left != NULL && srch->right != NULL) { // two child
-    BST *rplc = bst_min(srch->right);
-    srch->value = rplc->value;
-    bst_delete(srch->right, rplc->value);
   }
   return bst;
 }
