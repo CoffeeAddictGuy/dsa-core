@@ -154,6 +154,19 @@ size_t bst_sum(BST *bst) {
 
   return res + left + right;
 }
+bool bst_is_valid_helper(BST *bst, int allowed_min, int allowed_max) {
+  if (bst == NULL) {
+    return true;
+  }
+  if (bst->value <= allowed_min || bst->value >= allowed_max) {
+    return false;
+  }
+  return bst_is_valid_helper(bst->left, allowed_min, bst->value) &&
+         bst_is_valid_helper(bst->right, bst->value, allowed_max);
+}
+bool bst_is_valid(BST *bst) {
+  return bst_is_valid_helper(bst, INT_MIN, INT_MAX);
+}
 
 BST *bst_min(BST *bst) {
   if (bst->left == NULL) {

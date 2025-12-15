@@ -20,9 +20,10 @@ void bst_preorder(BST *bst);
 void bst_postorder(BST *bst);
 
 int bst_height(BST *bst);
-size_t bst_count_nodes(BST *bst); // todo
-size_t bst_sum(BST *bst);         // todo
-bool bst_is_valid(BST *bst);      // todo
+size_t bst_count_nodes(BST *bst);
+size_t bst_sum(BST *bst);
+static bool bst_is_valid_helper(BST *bst, int allowed_min, int allowed_max);
+bool bst_is_valid(BST *bst);
 BST *bst_min(BST *bst);
 BST *bst_max(BST *bst);
 
