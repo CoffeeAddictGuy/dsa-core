@@ -1,7 +1,6 @@
-#include "ht.h"
+#include "ht_chaining.h"
 
 unsigned int hash_func(const char *key, size_t table_size) {
-  return 0;
   unsigned long hash = 5381;
   int i = 0;
   while (key[i] != '\0') {
