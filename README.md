@@ -14,6 +14,9 @@
 | `stk.{c.h}` | Стек | [Открыть](src/stk.c) |
 | `que.{c.h}` | Очередь | [Открыть](src/que.c) |
 | `bst.{c.h}` | Бинарное дерево поиска | [Открыть](src/bst.c) |
+| `hp.{c.h}` | Куча | [Открыть](src/hp.c) |
+| `ht_chaining.{c.h}` | Hash Table Chaining | [Открыть](src/ht_chaining.c) |
+| `ht_oa.{c.h}` | Hash Table Open Addressing | [Открыть](src/ht_oa.c) |
 | `mylittlelib.h` | Математические утилиты | [Открыть](mylittlelib.h) |
 | `mysortlib.h` | Утилиты для сортировки | [Открыть](mysortlib.h) |
 | `DOC.md` | Документация | [Открыть](DOC.md) |
