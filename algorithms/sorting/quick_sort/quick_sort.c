@@ -13,14 +13,14 @@ void quicksort(int *array, size_t left, size_t right) {
     return;
   }
 
-  size_t pivot_idx = partition(array, left, right);
+  size_t pivot_idx = hoare_partition(array, left, right);
   if (pivot_idx > left) {
-    quicksort(array, left, pivot_idx - 1);
+    quicksort(array, left, pivot_idx);
   }
   quicksort(array, pivot_idx + 1, right);
 }
 
-size_t partition(int *array, size_t left, size_t right) {
+size_t lomuto_partition(int *array, size_t left, size_t right) {
   size_t pivot = right;
   size_t border = left;
   for (size_t j = left; j < right; j++) {
@@ -31,6 +31,26 @@ size_t partition(int *array, size_t left, size_t right) {
   }
   swap(&array[border], &array[pivot]);
   return border;
+}
+
+size_t hoare_partition(int *array, size_t left, size_t right) {
+  size_t pivot = left;
+  size_t l = left;
+  size_t r = right;
+
+  while (true) {
+    while (array[l] < array[pivot]) {
+      l++;
+    }
+    while (array[r] > array[pivot]) {
+      r--;
+    }
+    if (l >= r) {
+      return r;
+    }
+    swap(&array[l++], &array[r--]);
+  }
+  return r;
 }
 
 void array_print(int *array, size_t size) {
