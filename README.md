@@ -22,6 +22,7 @@ dsa-core/
 | **Heap** | Min-Heap с heapify операциями | [Открыть](data_structures/heap/) |
 | **Hash Table (Chaining)** | Хеш-таблица с методом цепочек | [Открыть](data_structures/hash_table_chain/) |
 | **Hash Table (Open Addressing)** | Хеш-таблица с линейным пробированием и ресайзом | [Открыть](data_structures/hash_table_oa/) |
+| **Graph** | Граф | [Открыть](data_structures/graph/) |
 
 
 ## Algorithms
@@ -35,6 +36,7 @@ dsa-core/
 | **Quick Sort** | Быстрая сортировка | [Открыть](algorithms/sorting/quick_sort/) |
 | **Heap Sort** | Сортировка через кучу | [Открыть](algorithms/sorting/heap_sort/) |
 | **Binary Search** | Алгоритм двоичного поиска | [Открыть](algorithms/searching/binary_search/) |
+| **Breadth-first search** | Алгоритм обхода графа в ширину | [Открыть](algorithms/searching/bfs/) |
 
 ## Требования
 
