@@ -46,3 +46,8 @@ Result q_size(Queue *queue) {
   result = (Result){0, queue->size};
   return result;
 }
+
+void q_free(Queue *queue) {
+  free(queue->data);
+  free(queue);
+}
