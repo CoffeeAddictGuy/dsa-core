@@ -9,11 +9,9 @@ BFSResult bfs(Graph *g, size_t source, size_t destination) {
   BFSState state = {0};
   BFSResult result = {0};
 
-  // bool visited[100] = {0};
   q_write(q, source);
-  // visited[source] = true;
   state.visited[source] = true;
-  state.parent[source] = -1; // Начало пути
+  state.parent[source] = -1;
 
   printf("BFS: %zu -> %zu\n", source, destination);
 
@@ -25,7 +23,6 @@ BFSResult bfs(Graph *g, size_t source, size_t destination) {
       printf("Found destination!\n");
       result.found = true;
 
-      // Восстанавливаем путь
       size_t idx = 0;
       size_t current = destination;
       while (current != (size_t)-1) {
@@ -54,5 +51,5 @@ BFSResult bfs(Graph *g, size_t source, size_t destination) {
   }
   printf("No path found\n");
   q_free(q);
-  return result; // Не найден
+  return result;
 }
