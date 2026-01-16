@@ -15,7 +15,6 @@ DFSResult *dfs_recurcive(Graph *g, size_t v, DFSState *state, DFSResult *result,
                          size_t end) {
   size_t neighborns[10];
   size_t n_cnt = graph_get_neighbors(g, v, neighborns, 10);
-  printf("Visiting vertex: %lld\n", v);
   if (v == end) {
     result->found = true;
 
@@ -33,8 +32,7 @@ DFSResult *dfs_recurcive(Graph *g, size_t v, DFSState *state, DFSResult *result,
       }
     }
   }
-
-  if (n_cnt < 1) {
+  if (!result->found) {
     return result;
   }
 }
