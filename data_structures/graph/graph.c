@@ -28,7 +28,6 @@ size_t graph_get_neighbors(Graph *g, size_t vertex, size_t *neighbors,
     }
     curr = curr->next;
   }
-  printf("\n");
   return n_cnt;
 }
 
