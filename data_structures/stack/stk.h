@@ -1,4 +1,4 @@
-#include "dncr.h"
+#include "../vector/dncr.h"
 #include <stdbool.h>
 
 typedef struct {

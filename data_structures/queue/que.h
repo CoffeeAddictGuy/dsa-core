@@ -1,3 +1,4 @@
+#pragma once
 #include <stdlib.h>
 
 typedef struct {
@@ -17,3 +18,4 @@ Queue *q_init(size_t capacity);
 void q_write(Queue *queue, int value);
 Result q_read(Queue *queue);
 Result q_size(Queue *queue);
+void q_free(Queue *queue);

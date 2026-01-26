@@ -13,8 +13,8 @@ void graph_add_edge(Graph *g, size_t from, size_t to) {
   ht_insert(g->adjacency, c_from, to);
 }
 
-int graph_get_neighbors(Graph *g, size_t vertex, size_t *neighbors,
-                        size_t max_neighbors) {
+size_t graph_get_neighbors(Graph *g, size_t vertex, size_t *neighbors,
+                           size_t max_neighbors) {
   char c_vertex[32];
   snprintf(c_vertex, sizeof(c_vertex), "%lld", vertex);
 
@@ -28,7 +28,6 @@ int graph_get_neighbors(Graph *g, size_t vertex, size_t *neighbors,
     }
     curr = curr->next;
   }
-  printf("\n");
   return n_cnt;
 }
 
