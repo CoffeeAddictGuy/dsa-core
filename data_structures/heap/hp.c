@@ -21,25 +21,14 @@ void heap_insert(MinHeap *heap, int value) {
     return;
   }
   if (heap->size + 1 >= heap->capacity) {
-    int *t = heap->data;
-    t = realloc(heap->data, sizeof(int) * (heap->capacity * 2));
-    if (t != NULL) {
-      heap->data = t;
-      heap->data[heap->size] = value;
-      heap->size = heap->size + 1;
-      heap->capacity = heap->capacity * 2;
-    } else {
-      int *n = (int *)malloc(sizeof(int) * (heap->capacity * 2));
-      memcpy(n, heap->data, heap->capacity);
-      free(heap->data);
-      heap->data = n;
-      heap->data[heap->size] = value;
-      heap->size = heap->size + 1;
-      heap->capacity = heap->capacity * 2;
+    int *t = realloc(heap->data, sizeof(int) * (heap->capacity * 2));
+    if (t == NULL) {
+      return;
     }
+    heap->data = t;
+    heap->capacity = heap->capacity * 2;
   } else {
-    heap->data[heap->size] = value;
-    heap->size = heap->size + 1;
+    heap->data[heap->size++] = value;
   }
   heapify_up(heap, heap->size - 1);
 }
